@@ -272,10 +272,19 @@ function getCountryPrintName(code) {
     return printName
 }
 
+/**
+ * Gets the group name a country belongs to
+ * @param {*} country the country HTML element to get the group for
+ * @returns the id string of the country group
+ */
 function getGroupFromCountry(country) {
     return country.parentElement.id;
 }
 
+/**
+ * Highlights all coutnries in the given group
+ * @param {*} group the id of the group of coutnries to highlight
+ */
 function highlightGroup(group) {
     let groupCountries = document.getElementById(group).querySelectorAll(".country");
     groupCountries.forEach((country, index) => {
@@ -283,6 +292,10 @@ function highlightGroup(group) {
     });
 }
 
+/**
+ * Unhighlight all countries in the given group
+ * @param {*} group the id name of the group to unhighlight
+ */
 function unhighlightGroup(group) {
     let groupCountries = document.getElementById(group).querySelectorAll(".country");
     groupCountries.forEach((country, index) => {
@@ -290,24 +303,40 @@ function unhighlightGroup(group) {
     });
 }
 
+/**
+ * Highlight an individual country (typically used when you are zoomed in hovering over it)
+ * @param {*} country the country HTML element to highlight 
+ */
 function highlightCountry(country) {
     country.style.fill = (country.classList.contains("visited")) ? visitedHoverColor : unvisitedHoverColor;
     document.getElementById("cursor-text").style.display = "block";
     document.getElementById("cursor-text").innerText = getCountryPrintName(country.getAttribute('id'));
 }
 
+/**
+ * Unhighlight a specific country
+ * @param {*} country the country HTML element to unhighlight
+ */
 function unhighlightCountry(country) {
     country.style.fill = (country.classList.contains("visited")) ? visitedColor : unvisitedColor;
     document.getElementById("cursor-text").style.display = "none";
 }
 
-function hideDisplayedPhotos(countryCode) {
+/**
+ * Hide all photos for all countries
+ */
+function hideAllDisplayedPhotos() {
     document.querySelector(".country-photos:not(.hidden)")?.classList.add("hidden");
     displayedCountry = null;
 }
 
+/**
+ * Handle logic for displaying the photos and additional info for the given country.
+ * Only displays if it the country has been visited and contains photos
+ * @param {*} countryCode the two-letter country code for the country to display
+ */
 function displayPhotos(countryCode) {
-    hideDisplayedPhotos(countryCode);
+    hideAllDisplayedPhotos();
     document.getElementById("primary-info-box").textContent = `Photos from ${getCountryPrintName(countryCode)}`;
 
     let isVisited = document.getElementById(`${countryCode}`).classList.contains("visited");
@@ -331,30 +360,50 @@ function displayPhotos(countryCode) {
     }
 }
 
+/**
+ * Prevent hitboxes from having cursors displayed over them.
+ * Used when you zoom into a hitbox, so you can select the individual countries within them
+ */
 function removeHitboxPointer() {
     document.querySelectorAll(".hitbox").forEach(hitbox => {
         hitbox.classList.remove("pointer-cursor");
     });
 }
 
+/**
+ * Add cursors being displayed when hovering over hitboxes
+ */
 function addHitboxPointer() {
     document.querySelectorAll(".hitbox").forEach(hitbox => {
         hitbox.classList.add("pointer-cursor");
     });
 }
 
+/**
+ * Set the displayed flag to the given country
+ * @param {*} countryCode the two-letter country code to display the flag for
+ */
 function setFlag(countryCode) {
     let flagDisplay = document.getElementById("flag-container");
     flagDisplay.style.display = "block";
     flagDisplay.className = `fi fi-${countryCode.toLowerCase()}`;
 }
 
+/**
+ * Hide all city rows in the city table
+ */
 function hideAllCities() {
     document.querySelectorAll(".city-row").forEach(cityRow => {
         cityRow.style.display = "none";
     });
 }
 
+/**
+ * Get a random integer within a range
+ * @param {*} min the minimum value
+ * @param {*} max the maximum value
+ * @returns a random integer [min, max]
+ */
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -363,11 +412,25 @@ function getRandomInt(min, max) {
 /*-- ================================================ --->
 <---                     Zoom Logic                   --->
 <--- ================================================ --*/
+/**
+ * Get the bounding box of the given group
+ * @param {*} group the group name to get the bounding box of
+ * @returns 
+ */
 function getBoundingBox(group) {
     let groupElements = document.getElementById(group);
     return groupElements.getBBox()
 }
 
+/**
+ * Draw an SVG line according to the attributes given
+ * @param {*} x1 x for point 1
+ * @param {*} y1 y for point 1
+ * @param {*} x2 x for point 2
+ * @param {*} y2 y for point 2
+ * @param {*} color stroke color of the line
+ * @param {*} thickness thickness of the line
+ */
 function drawSvgLine(x1, y1, x2, y2, color, thickness) {
     const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
     line.setAttribute("x1", x1);
@@ -380,23 +443,31 @@ function drawSvgLine(x1, y1, x2, y2, color, thickness) {
     svg.appendChild(line);
 }
 
+/**
+ * Smoothly zoom into a viewbox of the SVG
+ * @param {*} targetX x of the top left corner viewbox
+ * @param {*} targetY y of the top left corner viewbox
+ * @param {*} targetWidth width of the final viewbox
+ * @param {*} targetHeight height of the final viewbox
+ * @param {*} duration how long the transition should take, in seconds
+ */
 function smoothViewBoxTransition(targetX, targetY, targetWidth, targetHeight, duration) {
-  const start = performance.now();
+  let start = performance.now();
   
   // Parse current viewBox
-  const currentAttr = svg.getAttribute('viewBox').split(' ').map(Number);
-  const [startX, startY, startWidth, startHeight] = currentAttr;
+  let currentAttr = svg.getAttribute('viewBox').split(' ').map(Number);
+  let [startX, startY, startWidth, startHeight] = currentAttr;
 
   function step(time) {
-    const elapsed = time - start;
-    const progress = Math.min(elapsed / duration, 1);
+    let elapsed = time - start;
+    let progress = Math.min(elapsed / duration, 1);
     
-    const ease = 1 - Math.pow(1 - progress, 3);
+    let ease = 1 - Math.pow(1 - progress, 3);
 
-    const x = startX + (targetX - startX) * ease;
-    const y = startY + (targetY - startY) * ease;
-    const width = startWidth + (targetWidth - startWidth) * ease;
-    const height = startHeight + (targetHeight - startHeight) * ease;
+    let x = startX + (targetX - startX) * ease;
+    let y = startY + (targetY - startY) * ease;
+    let width = startWidth + (targetWidth - startWidth) * ease;
+    let height = startHeight + (targetHeight - startHeight) * ease;
 
     svg.setAttribute('viewBox', `${x} ${y} ${width} ${height}`);
 
@@ -408,6 +479,14 @@ function smoothViewBoxTransition(targetX, targetY, targetWidth, targetHeight, du
   requestAnimationFrame(step);
 }
 
+/**
+ * Get how much padding to add to a zoom viewbox
+ * @param {*} totalWidth total width of the SVG
+ * @param {*} totalHeight total heigh of the SVG
+ * @param {*} zoomWidth width of the zoomed viewbox
+ * @param {*} zoomHeight height of the zoomed viewbox
+ * @returns tuple of [widthPadding, heightPadding], in px
+ */
 function getZoomPaddings(totalWidth, totalHeight, zoomWidth, zoomHeight) {
     let widthScale = zoomWidth / totalWidth;
     let heightScale = zoomHeight / totalHeight;
@@ -434,10 +513,15 @@ function getZoomPaddings(totalWidth, totalHeight, zoomWidth, zoomHeight) {
     return [widthPadding, heightPadding]
 }
 
+/**
+ * Zoom into a country group
+ * @param {*} group the id name of the group to zoom into
+ */
 function zoomIntoGroup(group) {
     // Get zoom bounding box and set it
     let bbox = getBoundingBox(group);
-    let paddings = getZoomPaddings(svg.getBoundingClientRect().width, svg.getBoundingClientRect().height, bbox.width, bbox.height);
+    let bboxClient = svg.getBoundingClientRect();
+    let paddings = getZoomPaddings(bboxClient.width, bboxClient.height, bbox.width, bbox.height);
     let widthPadding = paddings[0];
     let heightPadding = paddings[1];
     zoomedGroup = group;
@@ -469,6 +553,11 @@ document.addEventListener("DOMContentLoaded", () => {
     hideAllCities();
 });
 
+/**
+ * Handle clicking on a country - if zoomed out, zoom into the group. otherwise select the country and display the photos
+ * @param {*} country the country HTML object that was clicked 
+ * @returns the group id name if zoomed into a group, otherwise the string two-letter country code zoomed into 
+ */
 function handleClickedCountry(country) {
     let group = getGroupFromCountry(country);
     if (zoomedGroup == null || group != zoomedGroup) {
@@ -484,6 +573,10 @@ function handleClickedCountry(country) {
     }
 }
 
+/**
+ * Display the photos for a given country
+ * @param {*} countryCode the two-letter country code to display photos for
+ */
 function displayCountryCities(countryCode) {
     hideAllCities();
     document.querySelectorAll(`.${countryCode}-city`).forEach(cityEntry => {
@@ -491,6 +584,9 @@ function displayCountryCities(countryCode) {
     });
 }
 
+/**
+ * Add event listeners to each country object - clicking and hovering
+ */
 countries.forEach(country => {
     // Handle clicking a country - zoom to region and scale up
     country.addEventListener('click', () => {
@@ -543,6 +639,10 @@ document.querySelectorAll(".city-entry").forEach(cityEntry => {
     })
 });
 
+/**
+ * Handles logic for clicking on the overlay "back" button.
+ * Zooms out to the original view
+ */
 document.getElementById("overlay-btn").addEventListener("click", () => {
     zoomedGroup = null;
     document.getElementById("overlay-btn").classList.add("hidden");
@@ -550,6 +650,9 @@ document.getElementById("overlay-btn").addEventListener("click", () => {
     smoothViewBoxTransition(0, 0, 700, 300, 750);
 });
 
+/**
+ * Moves the country name cursor textbox when zoomed in
+ */
 window.addEventListener("mousemove", (e) => {
     let cursorText = document.getElementById("cursor-text");
     cursorText.style.left = e.clientX + 16 + "px";
