@@ -179,27 +179,13 @@ The repository structure is pretty self-explanatory, but here is a quick rundown
 
  --------------------------------------------------------------
 ### QUESTIONS
-* [-] Make destination column smaller in table to give room for dates, allow for multiple dates to be in the column
+* [+] Make destination column smaller in table to give room for dates, allow for multiple dates to be in the column
+* [+] Counter for how many countries - 62
+* [+] Counter for U.N. countries - 56
 
-
-* [-] Does grant want a "default country" to display pictures of?
-    * no
-* [-] Does grant also want to display "fun facts" when a country is clicked on? Like the capital, population, language, etc.
-    * yes, small box that has capital, population, years v
-
-
-* [-] Get Grant a GitHub account set up so I can eventually transfer ownership to him (and give myself edit permissions) (maybe make it so we both know password so I can log in if needed)
-
-* [-] Want place to link socials?
-    * For now no, maybe later though
-
-* [-] Grant to give me his previous flight info to put in marquee
-    * Grant to send me this later
-
-
-
-* [-] Counter for how many countries - 62
-* [-] Counter for U.N. countries - 56
+* [-] Display "fun facts" for country - capital, population, language?
+* [-] Put grant flights into marquee
+* [-] Make mag draggable
 
 
 ### DONE:

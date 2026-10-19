@@ -89,6 +89,14 @@ marquee {
     /* background-color: #0226B2; */
 }
 
+#counter-container {
+    margin-bottom: 10px;
+}
+.counter {
+    text-align: center;
+    /* color: #1544ff; */
+}
+
 
 
 /*-- ================================================ --->
@@ -213,6 +221,7 @@ marquee {
 #table-container {
     overflow-y: scroll;
     min-height: 250px;
+    width: 25%;
 
     display: flex;
     justify-content: center;
@@ -243,10 +252,15 @@ tr {
     margin-top: 10px;
     background-color: #1E1E1E;
 }
+#countries-table td:first-child {
+    width: 60%;
+}
+#countries-table td:last-child {
+    width: 40%;
+}
 
 .country-entry {
     cursor: pointer;
-    /* text-decoration: underline; */
 }
 
 

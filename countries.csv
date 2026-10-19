@@ -36,7 +36,7 @@ KH,cambodia,south-asia,True,20XX
 CM,cameroon,northern-africa,False,20XX
 CA,canada,north-america,True,20XX
 IC,canary_islands,northern-africa,False,20XX
-CV,cape_verde,northern-africa,False,20XX
+CV,cabo_verde,northern-africa,False,20XX
 BQS,caribbean_netherlands,caribbean-central-america,False,20XX
 BQB,caribbean_netherlands,caribbean-central-america,False,20XX
 BQS,caribbean_netherlands,caribbean-central-america,False,20XX
@@ -52,7 +52,7 @@ HR,croatia,europe,True,20XX
 CU,cuba,caribbean-central-america,False,20XX
 CW,curaçao,caribbean-central-america,True,20XX
 CY,cyprus,middle-east-central-asia,False,20XX
-CZ,czech_republic,europe,False,20XX
+CZ,czechia,europe,False,20XX
 CI,côte_d'ivoire,northern-africa,False,20XX
 CD,democratic_republic_of_the_congo,southern-africa,False,20XX
 DK,denmark,europe,True,20XX
@@ -115,7 +115,7 @@ LY,libya,northern-africa,False,20XX
 LI,liechtenstein,europe,False,20XX
 LT,lithuania,europe,True,20XX
 LU,luxembourg,europe,False,20XX
-MK,macedonia,europe,False,20XX
+MK,north_macedonia,europe,False,20XX
 MG,madagascar,southern-africa,False,20XX
 MW,malawi,southern-africa,False,20XX
 MY,malaysia,south-asia,True,20XX
@@ -162,7 +162,7 @@ PL,poland,europe,True,20XX
 PT,portugal,europe,True,20XX
 PR,puerto_rico,caribbean-central-america,False,20XX
 QA,qatar,middle-east-central-asia,False,20XX
-CG,republic_of_congo,southern-africa,False,20XX
+CG,republic_of_the_congo,southern-africa,False,20XX
 RE,reunion,southern-africa,False,20XX
 RO,romania,europe,False,20XX
 RU,russia,north-asia,True,20XX
@@ -174,6 +174,7 @@ MF,saint_martin,caribbean-central-america,False,20XX
 SX,saint_martin,caribbean-central-america,False,20XX
 VC,saint_vincent_and_the_grenadines,caribbean-central-america,False,20XX
 WS,samoa,west-islands,False,20XX
+SM,san_marino,europe,False,20XX
 SA,saudi_arabia,middle-east-central-asia,False,20XX
 SN,senegal,northern-africa,False,20XX
 RS,serbia,europe,False,20XX
@@ -191,7 +192,7 @@ ES,spain,europe,True,20XX
 LK,sri_lanka,south-asia,False,20XX
 SD,sudan,northern-africa,False,20XX
 SR,suriname,south-america,False,20XX
-SZ,swaziland,southern-africa,False,20XX
+SZ,eswatini,southern-africa,False,20XX
 SE,sweden,europe,True,20XX
 CH,switzerland,europe,True,20XX
 SY,syria,middle-east-central-asia,False,20XX

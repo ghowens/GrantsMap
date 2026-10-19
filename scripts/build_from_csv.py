@@ -5,6 +5,9 @@ from bs4 import BeautifulSoup, Comment
 from bs4.formatter import HTMLFormatter
 from pathlib import Path
 
+un_countries = [ "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Republic of the Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czechia", "Democratic Republic of the Congo", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Côte d'Ivoire", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "MyanmarX", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "São Tomé and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"]
+un_countries = ["".join(char for char in s if char.isalnum()) for s in un_countries]
+
 # TODO: just redo entire build file at some point, is very messy due to so many big design changes
 
 # This file will update the website based on the info countries.csv
@@ -38,6 +41,8 @@ soup = BeautifulSoup(html_string, "html.parser")
 # /*-- ================================================ --->
 # <---                PULL CSV CHANGES                  --->
 # <--- ================================================ --*/
+country_count = 0
+un_count = 0
 country_table_html = "<tbody>\n\t\t\t\t\t"
 for row in csv_data[1:]:
     (country_code, country_name, group, visited, year_visited) = row
@@ -83,8 +88,12 @@ for row in csv_data[1:]:
     
     # Update table
     if visited:
+        country_count += 1
         country_entry = f"<tr><td><span class=\"country-entry\" data-code=\"{country_code}\">{country_name.replace('_', ' ').title()}</span></td><td>{year_visited}</td></tr>\n\t\t\t\t\t"
         country_table_html += country_entry.expandtabs(4)
+
+    if "".join(char for char in country_name if char.isalnum()) in un_countries:
+        un_count += 1
 
 
 
@@ -188,6 +197,16 @@ photos_html += "</div>\n\t\t"
 start = html_string.find("<tbody>", html_string.index("table id=\"countries-table\""))
 end = html_string.find("</tbody>", start)
 html_string = html_string[:start] + country_table_html[:-4] + html_string[end:]
+
+# Replace country count
+start = html_string.find("# Countries visited - ") + len("# Countries visited - ")
+end = html_string.find("</div>", start)
+html_string = html_string[:start] + str(country_count) + html_string[end:]
+
+# Replace country count
+start = html_string.find("# Countries visited - ") + len("# Countries visited - ")
+end = html_string.find("</div>", start)
+html_string = html_string[:start] + str(country_count) + html_string[end:]
 
 # Replace cities table
 start = html_string.find("<tbody>", html_string.index("table id=\"cities-table\""))
