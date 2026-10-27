@@ -214,3 +214,6 @@ The repository structure is pretty self-explanatory, but here is a quick rundown
 ### TODO:
 #### Design
 * [-] Info box look like passport page?
+
+* [-] Only allow zooming into a group when zoomed all the way out, otherwise just do country select
+* [-] Draggable SVG

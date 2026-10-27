@@ -1,4 +1,4 @@
-const countries = document.querySelectorAll('.country');
+const countries = document.querySelectorAll(".country");
 const svg = document.getElementById("map-svg");
 
 let zoomedGroup = null;
@@ -408,6 +408,30 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+/**
+ * Bound a value within a minimum and maximum value if it goes over
+ * @param {*} value the value to bound
+ * @param {*} min the minimum allowed value, inclusive
+ * @param {*} max the maximum allowed value, inclusive
+ * @returns the value if it is within the bounds, otherwise return the bound it is closest to
+ */
+function boundWithin(value, min, max) {
+    if (min == null && max == null) {
+        return value;
+    }
+    else if (min == null) {
+        return Math.min(value, max);
+
+    }
+    else if (max == null) {
+        return Math.max(value, min);
+
+    }
+    else {
+        return Math.min(Math.max(value, min), max);
+    }
+}
+
 
 /*-- ================================================ --->
 <---                     Zoom Logic                   --->
@@ -452,31 +476,31 @@ function drawSvgLine(x1, y1, x2, y2, color, thickness) {
  * @param {*} duration how long the transition should take, in seconds
  */
 function smoothViewBoxTransition(targetX, targetY, targetWidth, targetHeight, duration) {
-  let start = performance.now();
-  
-  // Parse current viewBox
-  let currentAttr = svg.getAttribute('viewBox').split(' ').map(Number);
-  let [startX, startY, startWidth, startHeight] = currentAttr;
-
-  function step(time) {
-    let elapsed = time - start;
-    let progress = Math.min(elapsed / duration, 1);
+    let start = performance.now();
     
-    let ease = 1 - Math.pow(1 - progress, 3);
+    // Parse current viewBox
+    let currentAttr = svg.getAttribute('viewBox').split(' ').map(Number);
+    let [startX, startY, startWidth, startHeight] = currentAttr;
 
-    let x = startX + (targetX - startX) * ease;
-    let y = startY + (targetY - startY) * ease;
-    let width = startWidth + (targetWidth - startWidth) * ease;
-    let height = startHeight + (targetHeight - startHeight) * ease;
+    function step(time) {
+        let elapsed = time - start;
+        let progress = Math.min(elapsed / duration, 1);
 
-    svg.setAttribute('viewBox', `${x} ${y} ${width} ${height}`);
+        let ease = 1 - Math.pow(1 - progress, 3);
 
-    if (progress < 1) {
-      requestAnimationFrame(step);
+        let x = startX + (targetX - startX) * ease;
+        let y = startY + (targetY - startY) * ease;
+        let width = startWidth + (targetWidth - startWidth) * ease;
+        let height = startHeight + (targetHeight - startHeight) * ease;
+
+        svg.setAttribute('viewBox', `${x} ${y} ${width} ${height}`);
+
+        if (progress < 1) {
+            requestAnimationFrame(step);
+        }
     }
-  }
 
-  requestAnimationFrame(step);
+    requestAnimationFrame(step);
 }
 
 /**
@@ -559,6 +583,7 @@ document.addEventListener("DOMContentLoaded", () => {
  * @returns the group id name if zoomed into a group, otherwise the string two-letter country code zoomed into 
  */
 function handleClickedCountry(country) {
+    console.log(`clicked country ${country}`)
     let group = getGroupFromCountry(country);
     if (zoomedGroup == null || group != zoomedGroup) {
         zoomIntoGroup(group);
@@ -633,7 +658,6 @@ document.querySelectorAll(".country-entry").forEach(countryEntry => {
  * Will jump to the photos for that specific city
  */
 document.querySelectorAll(".city-entry").forEach(cityEntry => {
-    console.log(cityEntry.dataset)
     cityEntry.addEventListener("click", () => {
         document.getElementById(cityEntry.dataset.photos).scrollIntoView();
     })
@@ -645,6 +669,7 @@ document.querySelectorAll(".city-entry").forEach(cityEntry => {
  */
 document.getElementById("overlay-btn").addEventListener("click", () => {
     zoomedGroup = null;
+    currSvgView = defaultSvgView;
     document.getElementById("overlay-btn").classList.add("hidden");
     addHitboxPointer();
     smoothViewBoxTransition(0, 0, 700, 300, 750);
@@ -659,8 +684,84 @@ window.addEventListener("mousemove", (e) => {
     cursorText.style.top = e.clientY + 16 + "px";
 });
 
-document.querySelectorAll(".photo-wrapper").forEach(photoWrapper => {
-    // photoWrapper.style.transform = `rotate(${getRandomInt(-1, 1)}deg)`;
-    // photoWrapper.style.paddingLeft = `${getRandomInt(-2, 2)}px`;
-    // photoWrapper.style.paddingRight = `${getRandomInt(-2, 2)}px`;
+
+
+
+let zoomScale = 0.1; // Zoom in/out 10% each time
+let maxZoomScale = 20; // 20x zoom increase
+
+let defaultSvgView = svg.getAttribute("viewBox").trim().split(/[\s,]+/).map(Number);
+let currSvgView = defaultSvgView;
+
+svg.addEventListener("wheel", (e) => {
+    e.preventDefault();
+
+    // Get cursor location within the SVG bounding box (as a fraction of the SVG's width/height)
+    let rect = svg.getBoundingClientRect();
+    let fracX = (e.clientX - rect.left) / rect.width;
+    let fracY = (e.clientY - rect.top) / rect.height;
+
+    // Use cursor fraction to get the current cursor location
+    let [defaultX, defaultY, defaultWidth, defaultHeight] = defaultSvgView;
+    let [vbX, vbY, vbWidth, vbHeight] = currSvgView;
+    let cursorX = vbX + fracX * vbWidth;
+    let cursorY = vbY + fracY * vbHeight;
+
+    // Determine if zooming in or out
+    let zoomDir = (e.deltaY > 0) ? 1 : -1;
+    let zoomFactor = Math.exp(2*zoomDir * zoomScale);
+
+    // Calculate shift values
+    let newWidth = boundWithin(vbWidth * zoomFactor, defaultWidth/maxZoomScale, defaultWidth);
+    let newHeight = newWidth * (defaultHeight / defaultWidth);
+    let newX = boundWithin(cursorX - (fracX * newWidth), 0, defaultWidth - newWidth);
+    let newY = boundWithin(cursorY - (fracY * newHeight), 0, defaultHeight - newHeight);
+    
+    console.log(`newX = ${newX}px`);
+    console.log(`newY = ${newY}px`);
+    console.log(`newWidth = ${newWidth}px`);
+    console.log(`newHeight = ${newHeight}px`);
+
+    // Perform the actual zoom
+    currSvgView = [newX, newY, newWidth, newHeight];
+    smoothViewBoxTransition(newX, newY, newWidth, newHeight, 100);
+    document.getElementById("overlay-btn").classList.remove("hidden");
 });
+
+
+/*
+let isDragging = false;
+let startX, startY;
+let initialX, initialY;
+
+svg.addEventListener("pointerdown", (e) => {
+    isDragging = true;
+    svg.setPointerCapture(e.pointerId);
+
+    let currentViewBox = svg.getAttribute("viewBox");
+    let [x, y, width, height] = currentViewBox.split(/[\s,]+/);
+    
+    initialX = parseFloat(x) || 0;
+    initialY = parseFloat(y) || 0;
+    startX = e.clientX;
+    startY = e.clientY;
+});
+
+svg.addEventListener("pointermove", (e) => {
+    if (!isDragging) return;
+    
+    // Calculate distance moved
+    const dx = startX - e.clientX;
+    const dy = startY - e.clientY;
+    
+    // Update SVG attributes
+    let currentViewBox = svg.getAttribute("viewBox");
+    let [x, y, width, height] = currentViewBox.split(/[\s,]+/);
+    svg.setAttribute("viewBox", `${initialX + dx} ${initialY + dy} ${width} ${height}`);
+});
+
+svg.addEventListener("pointerup", (e) => {
+    isDragging = false;
+    svg.releasePointerCapture(e.pointerId);
+});
+*/

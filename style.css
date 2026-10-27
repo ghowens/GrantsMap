@@ -118,6 +118,7 @@ marquee {
     margin: auto 0;
     background-color: #1E1E1E;
     user-select: none;
+    overscroll-behavior: contain;
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
 }
