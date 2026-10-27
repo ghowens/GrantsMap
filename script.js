@@ -1,18 +1,23 @@
 const countries = document.querySelectorAll(".country");
 const svg = document.getElementById("map-svg");
 
-let zoomedGroup = null;
 let displayedCountry = null;
 
 // let visitedColor = "#3FAA40";
-// let visitedHoverColor = "#3d8c40";
+// let visitedHighlightColor = "#3d8c40";
 // let unvisitedColor = "#A63E3F";
-// let unvisitedHoverColor = "#91383a";
+// let unvisitedHighlightColor = "#91383a";
 
 let visitedColor = "#32d635";
-let visitedHoverColor = "#3FAA40";
+let visitedHighlightColor = "#3FAA40";
+
 let unvisitedColor = "#d4393c";
-let unvisitedHoverColor = "#A63E3F";
+let unvisitedHighlightColor = "#A63E3F";
+
+let visitedSelectedColor = "#3FAA40";
+let unvisitedSelectedColor = "#A63E3F";
+let visitedHighlightSelectedColor = "#409741";
+let unvisitedHighlightSelectedColor = "#8b3b3c";
 
 
 const codeMappings = {
@@ -273,52 +278,39 @@ function getCountryPrintName(code) {
 }
 
 /**
- * Gets the group name a country belongs to
- * @param {*} country the country HTML element to get the group for
- * @returns the id string of the country group
+ * Set the color for an individual country 
+ * @param {*} country the country HTML element to color 
+ * @param {*} colorVisited the color to set if a visited country
+ * @param {*} colorUnvisited the color to set if an unvisited country 
  */
-function getGroupFromCountry(country) {
-    return country.parentElement.id;
+function setCountryColor(country, colorVisited, colorUnvisited) {
+    country.style.fill = (country.classList.contains("visited")) ? colorVisited : colorUnvisited;
 }
 
 /**
- * Highlights all coutnries in the given group
- * @param {*} group the id of the group of coutnries to highlight
+ * Set the border color for an individual country 
+ * @param {*} country the country HTML element to color 
+ * @param {*} strokeColor color of the stroke border
+ * @param {*} strokeWidth width of the stroke border
  */
-function highlightGroup(group) {
-    let groupCountries = document.getElementById(group).querySelectorAll(".country");
-    groupCountries.forEach((country, index) => {
-        country.style.fill = (country.classList.contains("visited")) ? visitedHoverColor : unvisitedHoverColor;
-    });
+function setCountryStroke(country, strokeColor, strokeWidth) {
+    country.style.stroke = strokeColor;
+    country.style.strokeWidth = strokeWidth;
 }
 
 /**
- * Unhighlight all countries in the given group
- * @param {*} group the id name of the group to unhighlight
+ * Show the text box that displays the country name by the cursor
+ * @param {*} country the country HTML element to show 
  */
-function unhighlightGroup(group) {
-    let groupCountries = document.getElementById(group).querySelectorAll(".country");
-    groupCountries.forEach((country, index) => {
-        country.style.fill = (country.classList.contains("visited")) ? visitedColor : unvisitedColor;
-    });
-}
-
-/**
- * Highlight an individual country (typically used when you are zoomed in hovering over it)
- * @param {*} country the country HTML element to highlight 
- */
-function highlightCountry(country) {
-    country.style.fill = (country.classList.contains("visited")) ? visitedHoverColor : unvisitedHoverColor;
+function showCountryCursorName(country) {
     document.getElementById("cursor-text").style.display = "block";
     document.getElementById("cursor-text").innerText = getCountryPrintName(country.getAttribute('id'));
 }
 
 /**
- * Unhighlight a specific country
- * @param {*} country the country HTML element to unhighlight
+ * Hide the text box that displays the country name by the cursor
  */
-function unhighlightCountry(country) {
-    country.style.fill = (country.classList.contains("visited")) ? visitedColor : unvisitedColor;
+function hideCountryCursorName() {
     document.getElementById("cursor-text").style.display = "none";
 }
 
@@ -327,7 +319,6 @@ function unhighlightCountry(country) {
  */
 function hideAllDisplayedPhotos() {
     document.querySelector(".country-photos:not(.hidden)")?.classList.add("hidden");
-    displayedCountry = null;
 }
 
 /**
@@ -346,7 +337,6 @@ function displayPhotos(countryCode) {
         document.getElementById("secondary-info-box").style.display = "none";
         document.getElementById("cities-container").style.display = "block";
         document.getElementById(countryCode + "-photos").classList.remove("hidden");
-        displayedCountry = countryCode;
     }
     else {
         document.getElementById("secondary-info-box").style.display = "block";
@@ -436,16 +426,6 @@ function boundWithin(value, min, max) {
 /*-- ================================================ --->
 <---                     Zoom Logic                   --->
 <--- ================================================ --*/
-/**
- * Get the bounding box of the given group
- * @param {*} group the group name to get the bounding box of
- * @returns 
- */
-function getBoundingBox(group) {
-    let groupElements = document.getElementById(group);
-    return groupElements.getBBox()
-}
-
 /**
  * Draw an SVG line according to the attributes given
  * @param {*} x1 x for point 1
@@ -537,38 +517,6 @@ function getZoomPaddings(totalWidth, totalHeight, zoomWidth, zoomHeight) {
     return [widthPadding, heightPadding]
 }
 
-/**
- * Zoom into a country group
- * @param {*} group the id name of the group to zoom into
- */
-function zoomIntoGroup(group) {
-    // Get zoom bounding box and set it
-    let bbox = getBoundingBox(group);
-    let bboxClient = svg.getBoundingClientRect();
-    let paddings = getZoomPaddings(bboxClient.width, bboxClient.height, bbox.width, bbox.height);
-    let widthPadding = paddings[0];
-    let heightPadding = paddings[1];
-    zoomedGroup = group;
-    smoothViewBoxTransition(bbox.x - widthPadding, bbox.y - heightPadding, bbox.width + (widthPadding * 2), bbox.height + (heightPadding * 2), 750);
-    document.getElementById("overlay-btn").classList.remove("hidden");
-
-    // Unhighlight all countries in the group once we zoom in to switch to individual country highlighting
-    unhighlightGroup(group);
-
-    // Remove pointer cursor from hitboxes
-    removeHitboxPointer();
-
-    // drawSvgLine(bbox.x, bbox.y, bbox.x + bbox.width, bbox.y, "red", 1);
-    // drawSvgLine(bbox.x, bbox.y, bbox.x, bbox.y + bbox.height, "red", 1);
-    // drawSvgLine(bbox.x + bbox.width, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height, "red", 1);
-    // drawSvgLine(bbox.x, bbox.y + bbox.height, bbox.x + bbox.width, bbox.y + bbox.height, "red", 1);
-
-    // drawSvgLine((bbox.x - widthPadding), (bbox.y - heightPadding), (bbox.x - widthPadding) + (bbox.width + (widthPadding * 2)), (bbox.y - heightPadding), "blue", 3);
-    // drawSvgLine((bbox.x - widthPadding), (bbox.y - heightPadding), (bbox.x - widthPadding), (bbox.y - heightPadding) + (bbox.height + (heightPadding * 2)), "blue", 3);
-    // drawSvgLine((bbox.x - widthPadding) + (bbox.width + (widthPadding * 2)), (bbox.y - heightPadding), (bbox.x - widthPadding) + (bbox.width + (widthPadding * 2)), (bbox.y - heightPadding) + (bbox.height + (heightPadding * 2)), "blue", 3);
-    // drawSvgLine((bbox.x - widthPadding), (bbox.y - heightPadding) + (bbox.height + (heightPadding * 2)), (bbox.x - widthPadding) + (bbox.width + (widthPadding * 2)), (bbox.y - heightPadding) + (bbox.height + (heightPadding * 2)), "blue", 3);
-}
-
 
 /*-- ================================================ --->
 <---              Core Functionality Logic            --->
@@ -578,24 +526,27 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /**
- * Handle clicking on a country - if zoomed out, zoom into the group. otherwise select the country and display the photos
+ * Handle clicking on a country - select the country and display the photos
  * @param {*} country the country HTML object that was clicked 
- * @returns the group id name if zoomed into a group, otherwise the string two-letter country code zoomed into 
+ * @returns the string two-letter country code zoomed into 
  */
 function handleClickedCountry(country) {
-    console.log(`clicked country ${country}`)
-    let group = getGroupFromCountry(country);
-    if (zoomedGroup == null || group != zoomedGroup) {
-        zoomIntoGroup(group);
-        return group;
+    // Unselect the previously selected country (if there is one)
+    if (displayedCountry) {
+        setCountryStroke(document.getElementById(displayedCountry), "black", "1");
     }
-    else {
-        let countryCode = country.getAttribute('id');
-        setFlag(countryCode);
-        displayCountryCities(countryCode);
-        displayPhotos(countryCode);
-        return countryCode;
-    }
+    
+    // Select new country
+    let countryCode = country.getAttribute('id');
+    displayedCountry = countryCode;
+
+    // Show all data for clicked on country
+    setCountryStroke(country, "gold", "5");
+    setFlag(countryCode);
+    displayCountryCities(countryCode);
+    displayPhotos(countryCode);
+
+    return countryCode;
 }
 
 /**
@@ -618,38 +569,25 @@ countries.forEach(country => {
         handleClickedCountry(country);
     });
 
-    // Highlight group on hover
+    // Highlight on hover
     country.addEventListener('mouseenter', () => {
-        let group = getGroupFromCountry(country);
-        if (zoomedGroup != null && group == zoomedGroup) {
-            highlightCountry(country);
-        }
-        else {
-            highlightGroup(group);
-        }
+        setCountryColor(country, visitedHighlightColor, unvisitedHighlightColor);
+        showCountryCursorName(country);
     });
 
-    // Unhighlight group on ending hover
+    // Unhighlight on ending hover
     country.addEventListener('mouseleave', () => {
-        let group = getGroupFromCountry(country);
-        if (zoomedGroup != null && group == zoomedGroup) {
-            unhighlightCountry(country);
-        }
-        else {
-            unhighlightGroup(group);
-        }
+        setCountryColor(country, visitedColor, unvisitedColor);
+        hideCountryCursorName();
     });
 });
 
 /**
  * Handles logic for clicking on an entry in the country table.
- * Will zoom into relevant group AND select the country.
  */
 document.querySelectorAll(".country-entry").forEach(countryEntry => {
     countryEntry.addEventListener("click", () => {
-        if (handleClickedCountry(document.getElementById(countryEntry.dataset.code)) == zoomedGroup) {
-            handleClickedCountry(document.getElementById(countryEntry.dataset.code));
-        }
+        handleClickedCountry(document.getElementById(countryEntry.dataset.code));
     })
 });
 
@@ -668,7 +606,6 @@ document.querySelectorAll(".city-entry").forEach(cityEntry => {
  * Zooms out to the original view
  */
 document.getElementById("overlay-btn").addEventListener("click", () => {
-    zoomedGroup = null;
     currSvgView = defaultSvgView;
     document.getElementById("overlay-btn").classList.add("hidden");
     addHitboxPointer();
