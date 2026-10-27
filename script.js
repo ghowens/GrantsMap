@@ -3,21 +3,15 @@ const svg = document.getElementById("map-svg");
 
 let displayedCountry = null;
 
-// let visitedColor = "#3FAA40";
-// let visitedHighlightColor = "#3d8c40";
-// let unvisitedColor = "#A63E3F";
-// let unvisitedHighlightColor = "#91383a";
-
 let visitedColor = "#32d635";
 let visitedHighlightColor = "#3FAA40";
-
 let unvisitedColor = "#d4393c";
 let unvisitedHighlightColor = "#A63E3F";
 
 let visitedSelectedColor = "#3FAA40";
 let unvisitedSelectedColor = "#A63E3F";
-let visitedHighlightSelectedColor = "#409741";
-let unvisitedHighlightSelectedColor = "#8b3b3c";
+let visitedHighlightSelectedColor = "#336934";
+let unvisitedHighlightSelectedColor = "#663031";
 
 
 const codeMappings = {
@@ -424,106 +418,15 @@ function boundWithin(value, min, max) {
 
 
 /*-- ================================================ --->
-<---                     Zoom Logic                   --->
-<--- ================================================ --*/
-/**
- * Draw an SVG line according to the attributes given
- * @param {*} x1 x for point 1
- * @param {*} y1 y for point 1
- * @param {*} x2 x for point 2
- * @param {*} y2 y for point 2
- * @param {*} color stroke color of the line
- * @param {*} thickness thickness of the line
- */
-function drawSvgLine(x1, y1, x2, y2, color, thickness) {
-    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    line.setAttribute("x1", x1);
-    line.setAttribute("y1", y1);
-    line.setAttribute("x2", x2);
-    line.setAttribute("y2", y2);
-    line.setAttribute("stroke", color);
-    line.setAttribute("stroke-width", thickness);
-    line.setAttribute("stroke-linecap", "round");
-    svg.appendChild(line);
-}
-
-/**
- * Smoothly zoom into a viewbox of the SVG
- * @param {*} targetX x of the top left corner viewbox
- * @param {*} targetY y of the top left corner viewbox
- * @param {*} targetWidth width of the final viewbox
- * @param {*} targetHeight height of the final viewbox
- * @param {*} duration how long the transition should take, in seconds
- */
-function smoothViewBoxTransition(targetX, targetY, targetWidth, targetHeight, duration) {
-    let start = performance.now();
-    
-    // Parse current viewBox
-    let currentAttr = svg.getAttribute('viewBox').split(' ').map(Number);
-    let [startX, startY, startWidth, startHeight] = currentAttr;
-
-    function step(time) {
-        let elapsed = time - start;
-        let progress = Math.min(elapsed / duration, 1);
-
-        let ease = 1 - Math.pow(1 - progress, 3);
-
-        let x = startX + (targetX - startX) * ease;
-        let y = startY + (targetY - startY) * ease;
-        let width = startWidth + (targetWidth - startWidth) * ease;
-        let height = startHeight + (targetHeight - startHeight) * ease;
-
-        svg.setAttribute('viewBox', `${x} ${y} ${width} ${height}`);
-
-        if (progress < 1) {
-            requestAnimationFrame(step);
-        }
-    }
-
-    requestAnimationFrame(step);
-}
-
-/**
- * Get how much padding to add to a zoom viewbox
- * @param {*} totalWidth total width of the SVG
- * @param {*} totalHeight total heigh of the SVG
- * @param {*} zoomWidth width of the zoomed viewbox
- * @param {*} zoomHeight height of the zoomed viewbox
- * @returns tuple of [widthPadding, heightPadding], in px
- */
-function getZoomPaddings(totalWidth, totalHeight, zoomWidth, zoomHeight) {
-    let widthScale = zoomWidth / totalWidth;
-    let heightScale = zoomHeight / totalHeight;
-    let scale = 1;
-
-    let baseWidthPadding = 25;
-    let baseHeightPadding = baseWidthPadding*(totalHeight/totalWidth);
-
-    // If width bound
-    let widthPadding = 0;
-    let heightPadding = 0;
-    if (widthScale >= heightScale) {
-        scale = widthScale;
-        widthPadding = baseWidthPadding + ((totalWidth * scale - zoomWidth) / 2);
-        heightPadding = ((totalHeight * scale - zoomHeight) / 2);
-    }
-    // If height bound
-    else {
-        scale = heightScale;
-        heightPadding = baseHeightPadding + ((totalHeight * scale - zoomHeight) / 2);
-        widthPadding = baseWidthPadding + ((totalWidth * scale - zoomWidth) / 2);
-    }
-
-    return [widthPadding, heightPadding]
-}
-
-
-/*-- ================================================ --->
-<---              Core Functionality Logic            --->
+<---            Country/City Selection Logic          --->
 <--- ================================================ --*/
 document.addEventListener("DOMContentLoaded", () => {
     hideAllCities();
 });
+
+function bringCountryToFront(country) {
+    country.parentNode.appendChild(country);
+}
 
 /**
  * Handle clicking on a country - select the country and display the photos
@@ -541,6 +444,7 @@ function handleClickedCountry(country) {
     displayedCountry = countryCode;
 
     // Show all data for clicked on country
+    bringCountryToFront(country);
     setCountryStroke(country, "gold", "5");
     setFlag(countryCode);
     displayCountryCities(countryCode);
@@ -622,7 +526,44 @@ window.addEventListener("mousemove", (e) => {
 });
 
 
+/*-- ================================================ --->
+<---               SVG Drag & Zoom Logic              --->
+<--- ================================================ --*/
+/**
+ * Smoothly zoom into a viewbox of the SVG
+ * @param {*} targetX x of the top left corner viewbox
+ * @param {*} targetY y of the top left corner viewbox
+ * @param {*} targetWidth width of the final viewbox
+ * @param {*} targetHeight height of the final viewbox
+ * @param {*} duration how long the transition should take, in seconds
+ */
+function smoothViewBoxTransition(targetX, targetY, targetWidth, targetHeight, duration) {
+    let start = performance.now();
+    
+    // Parse current viewBox
+    let currentAttr = svg.getAttribute('viewBox').split(' ').map(Number);
+    let [startX, startY, startWidth, startHeight] = currentAttr;
 
+    function step(time) {
+        let elapsed = time - start;
+        let progress = Math.min(elapsed / duration, 1);
+
+        let ease = 1 - Math.pow(1 - progress, 3);
+
+        let x = startX + (targetX - startX) * ease;
+        let y = startY + (targetY - startY) * ease;
+        let width = startWidth + (targetWidth - startWidth) * ease;
+        let height = startHeight + (targetHeight - startHeight) * ease;
+
+        svg.setAttribute('viewBox', `${x} ${y} ${width} ${height}`);
+
+        if (progress < 1) {
+            requestAnimationFrame(step);
+        }
+    }
+
+    requestAnimationFrame(step);
+}
 
 let zoomScale = 0.1; // Zoom in/out 10% each time
 let maxZoomScale = 20; // 20x zoom increase
@@ -630,6 +571,9 @@ let maxZoomScale = 20; // 20x zoom increase
 let defaultSvgView = svg.getAttribute("viewBox").trim().split(/[\s,]+/).map(Number);
 let currSvgView = defaultSvgView;
 
+/**
+ * Listener to zoom into SVG when scroll wheel is used
+ */
 svg.addEventListener("wheel", (e) => {
     e.preventDefault();
 
@@ -638,7 +582,7 @@ svg.addEventListener("wheel", (e) => {
     let fracX = (e.clientX - rect.left) / rect.width;
     let fracY = (e.clientY - rect.top) / rect.height;
 
-    // Use cursor fraction to get the current cursor location
+    // Use cursor fraction to get the current cursor location within SVG
     let [defaultX, defaultY, defaultWidth, defaultHeight] = defaultSvgView;
     let [vbX, vbY, vbWidth, vbHeight] = currSvgView;
     let cursorX = vbX + fracX * vbWidth;
@@ -653,11 +597,6 @@ svg.addEventListener("wheel", (e) => {
     let newHeight = newWidth * (defaultHeight / defaultWidth);
     let newX = boundWithin(cursorX - (fracX * newWidth), 0, defaultWidth - newWidth);
     let newY = boundWithin(cursorY - (fracY * newHeight), 0, defaultHeight - newHeight);
-    
-    console.log(`newX = ${newX}px`);
-    console.log(`newY = ${newY}px`);
-    console.log(`newWidth = ${newWidth}px`);
-    console.log(`newHeight = ${newHeight}px`);
 
     // Perform the actual zoom
     currSvgView = [newX, newY, newWidth, newHeight];
@@ -665,40 +604,67 @@ svg.addEventListener("wheel", (e) => {
     document.getElementById("overlay-btn").classList.remove("hidden");
 });
 
-
-/*
+let isCursorDown = false;
 let isDragging = false;
 let startX, startY;
 let initialX, initialY;
 
+/**
+ * Listener for start of drag for SVG
+ * When clicking on SVG, set initial values needed when dragging
+ */
 svg.addEventListener("pointerdown", (e) => {
-    isDragging = true;
-    svg.setPointerCapture(e.pointerId);
-
-    let currentViewBox = svg.getAttribute("viewBox");
-    let [x, y, width, height] = currentViewBox.split(/[\s,]+/);
-    
-    initialX = parseFloat(x) || 0;
-    initialY = parseFloat(y) || 0;
+    isCursorDown = true;
+    isDragging = false;
+    initialX = currSvgView[0];
+    initialY = currSvgView[1];
     startX = e.clientX;
     startY = e.clientY;
 });
 
+/**
+ * Listener to handle actual drag
+ * Calculate distance moved and update SVG accordingly
+ */
 svg.addEventListener("pointermove", (e) => {
-    if (!isDragging) return;
+    if (!isCursorDown) return;
+
+    // Calculate current zoom scale
+    let [defaultX, defaultY, defaultWidth, defaultHeight] = defaultSvgView;
+    let [vbX, vbY, vbWidth, vbHeight] = currSvgView;
+    
+    let zoomScale = vbWidth / defaultWidth;
     
     // Calculate distance moved
-    const dx = startX - e.clientX;
-    const dy = startY - e.clientY;
+    let dx = (startX - e.clientX) * zoomScale;
+    let dy = (startY - e.clientY) * zoomScale;
+
+    // Stop other onclick events once the mouse has moved far enough (so we can differentiate between a "drag" and a "click")
+    if (isCursorDown && !isDragging) {
+        if (Math.sqrt(dx**2, dy**2) >= 5*zoomScale) {
+            isDragging = true;
+            svg.setPointerCapture(e.pointerId);
+            svg.style.cursor = "grabbing";
+        }
+        else {
+            return;
+        }
+    };
     
     // Update SVG attributes
-    let currentViewBox = svg.getAttribute("viewBox");
-    let [x, y, width, height] = currentViewBox.split(/[\s,]+/);
-    svg.setAttribute("viewBox", `${initialX + dx} ${initialY + dy} ${width} ${height}`);
+    let newX = boundWithin(initialX + dx, defaultX, defaultX + defaultWidth - vbWidth);
+    let newY = boundWithin(initialY + dy, defaultY, defaultY + defaultHeight - vbHeight);
+    svg.setAttribute("viewBox", `${newX} ${newY} ${vbWidth} ${vbHeight}`);
+    currSvgView = [newX, newY, vbWidth, vbHeight];
 });
 
+/**
+ * Listener for end of drag for SVG
+ * Reset the dragging values back to defaults
+ */
 svg.addEventListener("pointerup", (e) => {
+    isCursorDown = false;
     isDragging = false;
+    svg.style.cursor = "grab";
     svg.releasePointerCapture(e.pointerId);
 });
-*/

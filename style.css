@@ -118,6 +118,7 @@ marquee {
     margin: auto 0;
     background-color: #1E1E1E;
     user-select: none;
+    cursor: grab;
     overscroll-behavior: contain;
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
@@ -183,6 +184,8 @@ marquee {
     cursor: pointer;
     transition: fill 0.3s ease;
     opacity: "1";
+    cursor: pointer;
+    paint-order: fill stroke;
 }
 .thin-stroke {
     stroke-width: 0.25;
