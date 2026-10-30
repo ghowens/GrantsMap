@@ -282,14 +282,19 @@ function setCountryColor(country, colorVisited, colorUnvisited) {
 }
 
 /**
- * Set the border color for an individual country 
+ * Set the border color for an individual country, where the stroke width is proportionally scaled by the current zoom level
  * @param {*} country the country HTML element to color 
  * @param {*} strokeColor color of the stroke border
- * @param {*} strokeWidth width of the stroke border
+ * @param {*} strokeWidth the maximum width of the stroke border (at full zoom out)
  */
-function setCountryStroke(country, strokeColor, strokeWidth) {
+function setScaledCountryStroke(country, strokeColor, strokeWidth) {
+    let [defaultX, defaultY, defaultWidth, defaultHeight] = defaultSvgView;
+    let [vbX, vbY, vbWidth, vbHeight] = currSvgView;
+    let zoomScale = vbWidth / defaultWidth;
+    let scaledStrokeWidth = boundWithin(strokeWidth*zoomScale + 1, 1, strokeWidth)
+
     country.style.stroke = strokeColor;
-    country.style.strokeWidth = strokeWidth;
+    country.style.strokeWidth = `${scaledStrokeWidth}`;
 }
 
 /**
@@ -328,18 +333,18 @@ function displayPhotos(countryCode) {
     let hasPhotos = (document.getElementById(countryCode + "-photos") != null);
     
     if (isVisited && hasPhotos) {
-        document.getElementById("secondary-info-box").style.display = "none";
+        document.getElementById("error-info-box").style.display = "none";
         document.getElementById("cities-container").style.display = "block";
         document.getElementById(countryCode + "-photos").classList.remove("hidden");
     }
     else {
-        document.getElementById("secondary-info-box").style.display = "block";
+        document.getElementById("error-info-box").style.display = "block";
         document.getElementById("cities-container").style.display = "none";
         if (isVisited) {
-            document.getElementById("secondary-info-box").innerHTML = `No Photos :(<br>Grant has not uploaded photos for ${getCountryPrintName(countryCode)}`;
+            document.getElementById("error-info-box").innerHTML = `No Photos :(<br>Grant has not uploaded photos for ${getCountryPrintName(countryCode)}`;
         }
         else {
-            document.getElementById("secondary-info-box").innerHTML = `No Photos :(<br>Grant has not been to ${getCountryPrintName(countryCode)}`;
+            document.getElementById("error-info-box").innerHTML = `No Photos :(<br>Grant has not been to ${getCountryPrintName(countryCode)}`;
         }
     }
 }
@@ -425,7 +430,13 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function bringCountryToFront(country) {
-    country.parentNode.appendChild(country);
+    // Remove the country from it's current location in the DOM, and draw it as the last item in the SVG
+    // NOTE: I am keeping the country SVG path elements in their region groups.
+    //       Because of that, when a country is on a group border I need to remove it from the group and add it to the overall SVG.
+    //       If I every remove the region group containers (which don't impact any visuals, and I'm leaving just for organization purposes),
+    //       then this function will need to be updated to just re-append the country to the SVG to automatically move it to the end.
+    country.remove(country);
+    document.getElementById("map-svg").appendChild(country);
 }
 
 /**
@@ -436,7 +447,7 @@ function bringCountryToFront(country) {
 function handleClickedCountry(country) {
     // Unselect the previously selected country (if there is one)
     if (displayedCountry) {
-        setCountryStroke(document.getElementById(displayedCountry), "black", "1");
+        setScaledCountryStroke(document.getElementById(displayedCountry), "black", 1);
     }
     
     // Select new country
@@ -445,10 +456,11 @@ function handleClickedCountry(country) {
 
     // Show all data for clicked on country
     bringCountryToFront(country);
-    setCountryStroke(country, "gold", "5");
+    setScaledCountryStroke(country, "gold", 5);
     setFlag(countryCode);
     displayCountryCities(countryCode);
     displayPhotos(countryCode);
+    displayFunFacts(countryCode);
 
     return countryCode;
 }
@@ -462,6 +474,17 @@ function displayCountryCities(countryCode) {
     document.querySelectorAll(`.${countryCode}-city`).forEach(cityEntry => {
         cityEntry.style.display = "table-row";
     });
+}
+
+/**
+ * Display the fun facts for a given country
+ * @param {*} countryCode the two-letter country code to display fun facts for
+ */
+function displayFunFacts(countryCode) {
+    document.querySelectorAll(`.fun-facts`).forEach(funFactsElem => {
+        funFactsElem.classList.add("hidden");
+    });
+    document.getElementById(`fun-facts-${countryCode}`).classList.remove("hidden");
 }
 
 /**
@@ -565,8 +588,8 @@ function smoothViewBoxTransition(targetX, targetY, targetWidth, targetHeight, du
     requestAnimationFrame(step);
 }
 
-let zoomScale = 0.1; // Zoom in/out 10% each time
-let maxZoomScale = 20; // 20x zoom increase
+let zoomRate = 0.1; // Zoom in/out 10% each time
+let maxZoomRate = 20; // 20x zoom increase
 
 let defaultSvgView = svg.getAttribute("viewBox").trim().split(/[\s,]+/).map(Number);
 let currSvgView = defaultSvgView;
@@ -575,6 +598,15 @@ let currSvgView = defaultSvgView;
  * Listener to zoom into SVG when scroll wheel is used
  */
 svg.addEventListener("wheel", (e) => {
+    let zoomDir = (e.deltaY > 0) ? 1 : -1;
+    let [defaultX, defaultY, defaultWidth, defaultHeight] = defaultSvgView;
+    let [vbX, vbY, vbWidth, vbHeight] = currSvgView;
+    
+    // Do not block/prevent webpage scrolling if we are already zoomed all the way out and trying to zoom out more, or vice versa
+    // if ((vbWidth == defaultWidth && zoomDir == 1) || (vbWidth == defaultWidth/maxZoomRate && zoomDir == -1)) {
+    //     return;
+    // }
+
     e.preventDefault();
 
     // Get cursor location within the SVG bounding box (as a fraction of the SVG's width/height)
@@ -583,17 +615,12 @@ svg.addEventListener("wheel", (e) => {
     let fracY = (e.clientY - rect.top) / rect.height;
 
     // Use cursor fraction to get the current cursor location within SVG
-    let [defaultX, defaultY, defaultWidth, defaultHeight] = defaultSvgView;
-    let [vbX, vbY, vbWidth, vbHeight] = currSvgView;
     let cursorX = vbX + fracX * vbWidth;
     let cursorY = vbY + fracY * vbHeight;
 
-    // Determine if zooming in or out
-    let zoomDir = (e.deltaY > 0) ? 1 : -1;
-    let zoomFactor = Math.exp(2*zoomDir * zoomScale);
-
     // Calculate shift values
-    let newWidth = boundWithin(vbWidth * zoomFactor, defaultWidth/maxZoomScale, defaultWidth);
+    let zoomAmount = Math.exp(2*zoomDir * zoomRate);
+    let newWidth = boundWithin(vbWidth * zoomAmount, defaultWidth/maxZoomRate, defaultWidth);
     let newHeight = newWidth * (defaultHeight / defaultWidth);
     let newX = boundWithin(cursorX - (fracX * newWidth), 0, defaultWidth - newWidth);
     let newY = boundWithin(cursorY - (fracY * newHeight), 0, defaultHeight - newHeight);
@@ -602,6 +629,11 @@ svg.addEventListener("wheel", (e) => {
     currSvgView = [newX, newY, newWidth, newHeight];
     smoothViewBoxTransition(newX, newY, newWidth, newHeight, 100);
     document.getElementById("overlay-btn").classList.remove("hidden");
+
+    // Update selected border width
+    if (displayedCountry) {
+        setScaledCountryStroke(document.getElementById(displayedCountry), "gold", 5);
+    }
 });
 
 let isCursorDown = false;

@@ -1,229 +1,229 @@
-code,name,visited,year_visited
-AF,afghanistan,False,20XX
-AL,albania,True,20XX
-DZ,algeria,False,20XX
-AS,american_samoa,False,20XX
-AD,andorra,False,20XX
-AO,angola,False,20XX
-AI,anguilla,False,20XX
-AG,antigua_and_barbuda,False,20XX
-AR,argentina,False,20XX
-AM,armenia,True,20XX
-AW,aruba,True,20XX
-AU,australia,False,20XX
-AT,austria,True,20XX
-AZ,azerbaijan,True,20XX
-BS,bahamas,True,20XX
-BH,bahrain,False,20XX
-BD,bangladesh,False,20XX
-BB,barbados,True,20XX
-BY,belarus,False,20XX
-BE,belgium,False,20XX
-BZ,belize,True,20XX
-BJ,benin,False,20XX
-BM,bermuda,False,20XX
-BT,bhutan,False,20XX
-BO,bolivia,False,20XX
-BA,bosnia_and_herzegovina,True,20XX
-BW,botswana,False,20XX
-BR,brazil,False,20XX
-VG,british_virgin_islands,False,20XX
-BN,brunei_darussalam,False,20XX
-BG,bulgaria,False,20XX
-BF,burkina_faso,False,20XX
-BI,burundi,False,20XX
-KH,cambodia,True,20XX
-CM,cameroon,False,20XX
-CA,canada,True,20XX
-IC,canary_islands,False,20XX
-CV,cabo_verde,False,20XX
-BQS,caribbean_netherlands,False,20XX
-BQB,caribbean_netherlands,False,20XX
-BQS,caribbean_netherlands,False,20XX
-KY,cayman_islands,False,20XX
-CF,central_african_republic,False,20XX
-TD,chad,False,20XX
-CL,chile,False,20XX
-CN,china,True,20XX
-CO,colombia,False,20XX
-KM,comoros,False,20XX
-CR,costa_rica,False,20XX
-HR,croatia,True,20XX
-CU,cuba,False,20XX
-CW,curaçao,True,20XX
-CY,cyprus,False,20XX
-CZ,czechia,False,20XX
-CI,côte_d'ivoire,False,20XX
-CD,democratic_republic_of_the_congo,False,20XX
-DK,denmark,True,20XX
-DJ,djibouti,False,20XX
-DM,dominica,False,20XX
-DO,dominican_republic,True,20XX
-EC,ecuador,False,20XX
-EG,egypt,True,20XX
-SV,el_salvador,False,20XX
-GQ,equatorial_guinea,False,20XX
-ER,eritrea,False,20XX
-EE,estonia,True,20XX
-ET,ethiopia,False,20XX
-FO,faeroe_islands,False,20XX
-FK,falkland_islands,False,20XX
-FJ,fiji,False,20XX
-FI,finland,True,20XX
-FR,france,True,20XX
-GF,french_guiana,False,20XX
-PF,french_polynesia,False,20XX
-GA,gabon,False,20XX
-GE,georgia,True,20XX
-DE,germany,True,20XX
-GH,ghana,False,20XX
-GR,greece,True,20XX
-GL,greenland,False,20XX
-GD,grenada,False,20XX
-GP,guadeloupe,False,20XX
-GU,guam,False,20XX
-GT,guatemala,False,20XX
-GN,guinea,False,20XX
-GW,guinea-Bissau,False,20XX
-GY,guyana,False,20XX
-HT,haiti,False,20XX
-HN,honduras,True,20XX
-HK,hong_kong,True,20XX
-HU,hungary,True,20XX
-IS,iceland,False,20XX
-IN,india,True,20XX
-ID,indonesia,True,20XX
-IR,iran,False,20XX
-IQ,iraq,False,20XX
-IE,ireland,True,20XX
-IL,israel,False,20XX
-IT,italy,True,20XX
-JM,jamaica,False,20XX
-JP,japan,True,20XX
-JO,jordan,False,20XX
-KZ,kazakhstan,True,20XX
-KE,kenya,False,20XX
-XK,kosovo,False,20XX
-KW,kuwait,False,20XX
-KG,kyrgyzstan,True,20XX
-LA,laos,False,20XX
-LV,latvia,True,20XX
-LB,lebanon,False,20XX
-LS,lesotho,False,20XX
-LR,liberia,False,20XX
-LY,libya,False,20XX
-LI,liechtenstein,False,20XX
-LT,lithuania,True,20XX
-LU,luxembourg,False,20XX
-MK,north_macedonia,False,20XX
-MG,madagascar,False,20XX
-MW,malawi,False,20XX
-MY,malaysia,True,20XX
-MV,maldives,False,20XX
-ML,mali,False,20XX
-MT,malta,True,20XX
-MH,marshall_islands,False,20XX
-MQ,martinique,False,20XX
-MR,mauritania,False,20XX
-MU,mauritius,False,20XX
-YT,mayotte,False,20XX
-MX,mexico,True,20XX
-FM,micronesia,False,20XX
-MD,moldova,False,20XX
-MN,mongolia,False,20XX
-ME,montenegro,True,20XX
-MS,montserrat,False,20XX
-MA,morocco,False,20XX
-MZ,mozambique,False,20XX
-MM,myanmar,False,20XX
-NA,namibia,False,20XX
-NR,nauru,False,20XX
-NP,nepal,False,20XX
-NL,netherlands,True,20XX
-NC,new_caledonia,False,20XX
-NZ,new_zealand,False,20XX
-NI,nicaragua,False,20XX
-NE,niger,False,20XX
-NG,nigeria,False,20XX
-KP,north_korea,False,20XX
-MP,northern_mariana_islands,False,20XX
-NO,norway,False,20XX
-OM,oman,False,20XX
-PK,pakistan,False,20XX
-PW,palau,False,20XX
-PS,palestine,False,20XX
-PA,panama,False,20XX
-PG,papua_new_guinea,False,20XX
-PY,paraguay,False,20XX
-PE,peru,True,20XX
-PH,philippines,True,20XX
-PN,pitcairn_islands,False,20XX
-PL,poland,True,20XX
-PT,portugal,True,20XX
-PR,puerto_rico,False,20XX
-QA,qatar,False,20XX
-CG,republic_of_the_congo,False,20XX
-RE,reunion,False,20XX
-RO,romania,False,20XX
-RU,russia,True,20XX
-RW,rwanda,False,20XX
-BL,saint_barthélemy,False,20XX
-KN,saint_kitts_and_nevis,False,20XX
-LC,saint_lucia,False,20XX
-MF,saint_martin,False,20XX
-SX,saint_martin,False,20XX
-VC,saint_vincent_and_the_grenadines,False,20XX
-WS,samoa,False,20XX
-SM,san_marino,False,20XX
-SA,saudi_arabia,False,20XX
-SN,senegal,False,20XX
-RS,serbia,False,20XX
-SC,seychelles,False,20XX
-SL,sierra_leone,False,20XX
-SG,singapore,True,20XX
-SK,slovakia,True,20XX
-SI,slovenia,False,20XX
-SB,solomon_islands,False,20XX
-SO,somalia,False,20XX
-ZA,south_africa,False,20XX
-KR,south_korea,True,20XX
-SS,south_sudan,False,20XX
-ES,spain,True,20XX
-LK,sri_lanka,False,20XX
-SD,sudan,False,20XX
-SR,suriname,False,20XX
-SZ,eswatini,False,20XX
-SE,sweden,True,20XX
-CH,switzerland,True,20XX
-SY,syria,False,20XX
-ST,são_tomé_and_principe,False,20XX
-TW,taiwan,True,20XX
-TJ,tajikistan,True,20XX
-TZ,tanzania,False,20XX
-TH,thailand,True,20XX
-GM,the_gambia,False,20XX
-TL,timor-leste,False,20XX
-TG,togo,False,20XX
-TO,tonga,False,20XX
-TT,trinidad_and_tobago,False,20XX
-TN,tunisia,False,20XX
-TR,turkey,True,20XX
-TM,turkmenistan,False,20XX
-TC,turks_and_caicos_islands,True,20XX
-TV,tuvalu,False,20XX
-UG,uganda,False,20XX
-UA,ukraine,False,20XX
-AE,united_arab_emirates,False,20XX
-GB,united_kingdom,True,20XX
-US,united_states,True,20XX
-VI,united_states_virgin_islands,False,20XX
-UY,uruguay,False,20XX
-UZ,uzbekistan,True,20XX
-VU,vanuatu,False,20XX
-VA,vatican_city,True,20XX
-VE,venezuela,False,20XX
-VN,vietnam,True,20XX
-EH,western_sahara,False,20XX
-YE,yemen,False,20XX
-ZM,zambia,False,20XX
-ZW,zimbabwe,False,20XX
+code,name,visited,year_visited,capital,language,population
+AF,afghanistan,False,20XX,Kabul,"Persian, Pashto","43,844,000"
+AL,albania,True,20XX,Tirana,"Albanian","2,335,930"
+DZ,algeria,False,20XX,Algiers,"Arabic, Berber","47,400,000"
+AS,american_samoa,False,20XX,Pago Pago,"Samoan, English","49,710"
+AD,andorra,False,20XX,Andorra la Vella,"Catalan","90,122"
+AO,angola,False,20XX,Luanda,"Portuguese","38,778,554"
+AI,anguilla,False,20XX,The Valley,"English ","16,010"
+AG,antigua_and_barbuda,False,20XX,St. John's,"English, Spanish","103,603"
+AR,argentina,False,20XX,Buenos Aires,"Spanish","46,466,688"
+AM,armenia,True,20XX,Yerevan,"Armenian","3,103,900"
+AW,aruba,True,20XX,Oranjestad,"Papiamento, Dutch","110,625"
+AU,australia,False,20XX,Canberra,"English","27,921,150"
+AT,austria,True,20XX,Vienna,"German","9,217,573"
+AZ,azerbaijan,True,20XX,Baku,"Azerbaijani","10,273,450"
+BS,bahamas,True,20XX,Nassau,"English","398,165"
+BH,bahrain,False,20XX,Manama,"Arabic","1,603,260"
+BD,bangladesh,False,20XX,Dhaka,"Bengali","169,828,911"
+BB,barbados,True,20XX,Bridgetown,"English","261,692"
+BY,belarus,False,20XX,Minsk,"Belarusian, Russian","9,056,080"
+BE,belgium,False,20XX,Brussels,"Dutch, French, German","11,944,011"
+BZ,belize,True,20XX,Belmopan,"English","418,982"
+BJ,benin,False,20XX,Porto-Novo,"French","13,551,992"
+BM,bermuda,False,20XX,Hamilton,"English","64,055"
+BT,bhutan,False,20XX,Thimphu,"Dzongkha","790,718"
+BO,bolivia,False,20XX,La Paz / Sucre,"Spanish, 36 others...","11,365,333"
+BA,bosnia_and_herzegovina,True,20XX,Sarajevo,"Bosnian, Croatian, Serbian","3,412,000"
+BW,botswana,False,20XX,Gaborone,"English","2,515,633"
+BR,brazil,False,20XX,Brasília,"Portuguese","214,211,951"
+VG,british_virgin_islands,False,20XX,Road Town,"English","39,471"
+BN,brunei_darussalam,False,20XX,Bandar Seri Begawan,"Malay","458,600"
+BG,bulgaria,False,20XX,Sofia,"Bulgarian","6,423,207"
+BF,burkina_faso,False,20XX,Ouagadougou,"French, English, Mooré, Dyula, Fula, Bissa","24,736,828"
+BI,burundi,False,20XX,Gitega / Bujumbura,"French, Kirundi, English","12,332,788"
+KH,cambodia,True,20XX,Phnom Penh,"Khmer","17,816,143"
+CM,cameroon,False,20XX,Yaoundé,"English, French","29,442,327"
+CA,canada,True,20XX,Ottawa,"English, French","41,798,407"
+IC,canary_islands,False,20XX,Santa Cruz de Tenerife / Las Palmas de Gran Canaria,"Spanish","2,258,866"
+CV,cabo_verde,False,20XX,Praia,"Portuguese","491,233"
+BQB,caribbean_netherlands,False,20XX,Kralendijk,"Papiamentu, Dutch","25,133"
+BQE,caribbean_netherlands,False,20XX,Oranjestad,"English","3,204"
+BQS,caribbean_netherlands,False,20XX,The Bottom,"English","2,060"
+KY,cayman_islands,False,20XX,George Town,"English","88,833"
+CF,central_african_republic,False,20XX,Bangui,"French, Sango","6,470,307"
+TD,chad,False,20XX,N'Djamena,"Arabic, French","20,031,602"
+CL,chile,False,20XX,Santiago,"Spanish","20,150,948"
+CN,china,True,20XX,Beijing,"Chinese","1,404,890,000"
+CO,colombia,False,20XX,Bogotá,"Spanish","53,399,171"
+KM,comoros,False,20XX,Moroni,"Arabic, Comorian, French","944,388"
+CR,costa_rica,False,20XX,San José,"Spanish","5,217,296"
+HR,croatia,True,20XX,Zagreb,"Croatian","3,874,993"
+CU,cuba,False,20XX,Havana,"Spanish","9,434,593"
+CW,curaçao,True,20XX,Willemstad,"Papiamentu, Dutch, English","158,006"
+CY,cyprus,False,20XX,Nicosia,"Greek, Turkish","996,600"
+CZ,czechia,False,20XX,Prague,"Czech","10,903,655"
+CI,côte_d'ivoire,False,20XX,Yamoussoukro / Abidjan,"French","33,293,101"
+CD,democratic_republic_of_the_congo,False,20XX,Kinshasa,"French","116,452,162"
+DK,denmark,True,20XX,Copenhagen,"Danish","6,038,638"
+DJ,djibouti,False,20XX,Djibouti,"Arabic, French","1,066,809"
+DM,dominica,False,20XX,Roseau,"English","65,431"
+DO,dominican_republic,True,20XX,Santo Domingo,"Spanish","10,771,504"
+EC,ecuador,False,20XX,Quito,"Spanish","18,243,816"
+EG,egypt,True,20XX,Cairo,"Arabic","108,613,296"
+SV,el_salvador,False,20XX,San Salvador,"Spanish","6,029,976"
+GQ,equatorial_guinea,False,20XX,Ciudad de la Paz,"French, Portuguese, Spanish","1,668,768"
+ER,eritrea,False,20XX,Asmara,"Tigrinya","3,682,669"
+EE,estonia,True,20XX,Tallinn,"Estonian","1,360,745"
+ET,ethiopia,False,20XX,Addis Ababa,"Afar, Amharic, Oromo, Somali, Tigrinya","111,652,998"
+FO,faeroe_islands,False,20XX,Tórshavn,"Faroese","55,640"
+FK,falkland_islands,False,20XX,Stanley,"English","3,662"
+FJ,fiji,False,20XX,Suva,"English, Fijian, Fiji Hindi","902,623"
+FI,finland,True,20XX,Helsinki,"Finnish, Swedish","5,662,086"
+FR,france,True,20XX,Paris,"French","69,081,996"
+GF,french_guiana,False,20XX,Cayenne,"French","298,554"
+PF,french_polynesia,False,20XX,Papeete,"French, Tahitian","279,500"
+GA,gabon,False,20XX,Libreville,"French","2,469,296"
+GE,georgia,True,20XX,Tbilisi,"Georgian","3,941,100"
+DE,germany,True,20XX,Berlin,"German","83,298,787"
+GH,ghana,False,20XX,Accra,"English","34,378,768"
+GR,greece,True,20XX,Athens,"Greek","10,372,335"
+GL,greenland,False,20XX,Nuuk,"Greenlandic","56,945"
+GD,grenada,False,20XX,St. George's,"English","109,021"
+GP,guadeloupe,False,20XX,Basse-Terre,"Spanish","378,561"
+GU,guam,False,20XX,Hagåtña,"English, Chamorro","153,836"
+GT,guatemala,False,20XX,Guatemala City,"Spanish","18,312,373"
+GN,guinea,False,20XX,Conakry,"French","17,521,167"
+GW,guinea-Bissau,False,20XX,Bissau,"Portuguese","1,890,252"
+GY,guyana,False,20XX,Georgetown,"English","956,044"
+HT,haiti,False,20XX,Port-au-Prince,"French, Haitian Creole","11,867,032"
+HN,honduras,True,20XX,Tegucigalpa / Comayagüela,"Spanish","10,186,738"
+HK,hong_kong,True,20XX,Hong Kong,"Cantonese, English","7,518,300"
+HU,hungary,True,20XX,Budapest,"Hungarian","9,488,428"
+IS,iceland,False,20XX,Reykjavík,"Icelandic","396,500"
+IN,india,True,20XX,New Delhi,"Hindi, English","1,429,404,000"
+ID,indonesia,True,20XX,Jakarta / Nusantara,"Indonesian","290,125,073"
+IR,iran,False,20XX,Tehran,"Persian","87,134,000"
+IQ,iraq,False,20XX,Baghdad,"Arabic, Kurdish","46,118,793"
+IE,ireland,True,20XX,Dublin,"Irish, English","5,525,600"
+IL,israel,False,20XX,Jerusalem,"Hebrew","10,305,000"
+IT,italy,True,20XX,Rome,"Italian","58,943,673"
+JM,jamaica,False,20XX,Kingston,"English","2,774,538"
+JP,japan,True,20XX,Tokyo,"Japanese","122,690,000"
+JO,jordan,False,20XX,Amman,"Arabic","11,937,000"
+KZ,kazakhstan,True,20XX,Astana,"Kazakh, Russian","20,618,796"
+KE,kenya,False,20XX,Nairobi,"English, Swahili","54,227,015"
+XK,kosovo,False,20XX,Pristina,"Albanian, Serbian","1,582,322"
+KW,kuwait,False,20XX,Kuwait City,"Arabic","4,881,254"
+KG,kyrgyzstan,True,20XX,Bishkek,"Kyrgyz, Russian","7,404,300"
+LA,laos,False,20XX,Vientiane,"Lao","7,745,000"
+LV,latvia,True,20XX,Riga,"Latvian","1,829,800"
+LB,lebanon,False,20XX,Beirut,"Arabic","5,895,466"
+LS,lesotho,False,20XX,Maseru,"Sesotho, English","2,116,427"
+LR,liberia,False,20XX,Monrovia,"English","5,248,621"
+LY,libya,False,20XX,Tripoli,"Arabic","7,539,852"
+LI,liechtenstein,False,20XX,Vaduz,"German","41,228"
+LT,lithuania,True,20XX,Vilnius,"Lithuanian","2,889,444"
+LU,luxembourg,False,20XX,Luxembourg,"French, German, Luxembourgish","690,959"
+MG,madagascar,False,20XX,Antananarivo,"French, Malagasy","32,658,977"
+MW,malawi,False,20XX,Lilongwe,"English","21,201,635"
+MY,malaysia,True,20XX,Kuala Lumpur / Putrajaya,"Malay","34,389,400"
+MV,maldives,False,20XX,Malé,"Dhivehi","515,132"
+ML,mali,False,20XX,Bamako,"French,	Bambara, Bomu, Bozo, Mamara, Maninkakan, Soninke, Songhay, Syenara, Tamasheq, Xaasongaxango","23,929,000"
+MT,malta,True,20XX,Valletta,"Maltese, English","588,254"
+MH,marshall_islands,False,20XX,Majuro,"English, Marshallese","42,418"
+MQ,martinique,False,20XX,Fort-de-France,"French","349,925"
+MR,mauritania,False,20XX,Nouakchott,"Arabic","4,927,532"
+MU,mauritius,False,20XX,Port Louis,"English, French","1,240,316"
+YT,mayotte,False,20XX,Mamoudzou,"French","320,901"
+MX,mexico,True,20XX,Mexico City,"Spanish","131,231,919"
+FM,micronesia,False,20XX,Palikir,"English","75,817"
+MD,moldova,False,20XX,Chișinău,"Romanian","2,365,600"
+MN,mongolia,False,20XX,Ulaanbaatar,"Mongolian","3,591,120"
+ME,montenegro,True,20XX,Podgorica,"Montenegrin","622,902"
+MS,montserrat,False,20XX,Brades / Plymouth,"English","4,386"
+MA,morocco,False,20XX,Rabat,"Arabic, Berber","37,254,695"
+MZ,mozambique,False,20XX,Maputo,"Portuguese","34,958,973"
+MM,myanmar,False,20XX,Naypyidaw,"Burmese","51,375,327"
+NA,namibia,False,20XX,Windhoek,"English","3,022,401"
+NR,nauru,False,20XX,Yaren,"English, Nauruan","11,680"
+NP,nepal,False,20XX,Kathmandu,"Nepali","30,034,040"
+NL,netherlands,True,20XX,Amsterdam / The Hague,"Dutch","18,171,612"
+NC,new_caledonia,False,20XX,Nouméa,"French","264,596"
+NZ,new_zealand,False,20XX,Wellington,"Māori, English","5,357,300"
+NI,nicaragua,False,20XX,Managua,"Spanish","6,874,748"
+NE,niger,False,20XX,Niamey,"Hausa","27,522,750"
+NG,nigeria,False,20XX,Abuja,"English","223,800,000"
+KP,north_korea,False,20XX,Pyongyang,"Korean","25,950,000"
+MK,north_macedonia,False,20XX,Skopje,"Macedonian, Albanian","1,819,074"
+MP,northern_mariana_islands,False,20XX,Saipan,"English, Chamorro, Carolinian","47,329"
+NO,norway,False,20XX,Oslo,"Norwegian, Sami","5,636,904"
+OM,oman,False,20XX,Muscat,"Arabic","5,454,352"
+PK,pakistan,False,20XX,Islamabad,"Urdu, English","241,499,431"
+PW,palau,False,20XX,Ngerulmud,"English, Palauan","16,733"
+PS,palestine,False,20XX,Jerusalem / Ramallah,"Arabic","5,557,096"
+PA,panama,False,20XX,Panama City,"Spanish","4,064,780"
+PG,papua_new_guinea,False,20XX,Port Moresby,"English, Hiri Motu, Tok Pisin","10,185,363"
+PY,paraguay,False,20XX,Asunción,"Spanish, Guarani","6,109,644"
+PE,peru,True,20XX,Lima,"Spanish","34,157,732"
+PH,philippines,True,20XX,Manila,"Filipino, English","114,849,400"
+PN,pitcairn_islands,False,20XX,Adamstown,"Pitkern, English","35"
+PL,poland,True,20XX,Warsaw,"Polish","37,232,000"
+PT,portugal,True,20XX,Lisbon,"Portuguese","11,424,031"
+PR,puerto_rico,False,20XX,San Juan,"Spanish, English","3,184,835"
+QA,qatar,False,20XX,Doha,"Arabic","3,370,611"
+CG,republic_of_the_congo,False,20XX,Brazzaville,"French","6,142,180"
+RE,réunion,False,20XX,Saint-Denis,"French","910,985"
+RO,romania,False,20XX,Bucharest,"Romanian","19,041,322"
+RU,russia,True,20XX,Moscow,"Russian","146,028,325"
+RW,rwanda,False,20XX,Kigali,"English, French, Kinyarwanda, Swahili","14,418,145"
+BL,saint_barthélemy,False,20XX,Gustavia,"French","10,562"
+KN,saint_kitts_and_nevis,False,20XX,Basseterre,"English","51,320"
+LC,saint_lucia,False,20XX,Castries,"English","184,100"
+MF,saint_martin,False,20XX,Marigot,"Dutch, English","31,496"
+SX,sint_maarten,False,20XX,Philipsburg,"Dutch, English","41,349"
+VC,saint_vincent_and_the_grenadines,False,20XX,Kingstown,"English","109,296"
+WS,samoa,False,20XX,Apia,"English, Samoan","205,557"
+SM,san_marino,False,20XX,San Marino,"Italian","34,160"
+SA,saudi_arabia,False,20XX,Riyadh,"Arabic","35,300,280"
+SN,senegal,False,20XX,Dakar,"French","19,575,061"
+RS,serbia,False,20XX,Belgrade,"Serbian","6,532,019"
+SC,seychelles,False,20XX,Victoria,"English, French, Seychellois Creole","123,565"
+SL,sierra_leone,False,20XX,Freetown,"English","9,270,700"
+SG,singapore,True,20XX,Singapore,"English, Malay, Mandarin Chinese, Tamil","6,208,500"
+SK,slovakia,True,20XX,Bratislava,"Slovak","5,403,009"
+SI,slovenia,False,20XX,Ljubljana,"Slovene","2,136,385"
+SB,solomon_islands,False,20XX,Honiara,"English","750,325"
+SO,somalia,False,20XX,Mogadishu,"Somali, Arabic","20,305,907"
+ZA,south_africa,False,20XX,Bloemfontein / Cape Town / Pretoria,"Afrikaans, English, Southern Ndebele, Sotho, Northern Sotho, Swazi, Tsonga, Tswana, Venda, Xhosa, Zulu","63,522,380"
+KR,south_korea,True,20XX,Seoul,"Korean","51,088,284"
+SS,south_sudan,False,20XX,Juba,"English","15,786,898"
+ES,spain,True,20XX,Madrid,"Spanish","49,801,559"
+LK,sri_lanka,False,20XX,Colombo / Sri Jayawardenepura Kotte,"Sinhala, Tamil","21,778,000"
+SD,sudan,False,20XX,Khartoum,"Arabic, English","53,282,719"
+SR,suriname,False,20XX,Paramaribo,"Dutch","616,500"
+SZ,eswatini,False,20XX,Lobamba / Mbabane,"English, Swazi","1,235,549"
+SE,sweden,True,20XX,Stockholm,"Dutch","10,621,103"
+CH,switzerland,True,20XX,Bern,"French, German, Italian, Romansh","9,154,896"
+SY,syria,False,20XX,Damascus,"Arabic","26,472,497"
+ST,são_tomé_and_príncipe,False,20XX,São Tomé,"Portuguese","209,607"
+TW,taiwan,True,20XX,Taipei,"Mandarin Chinese","23,213,251"
+TJ,tajikistan,True,20XX,Dushanbe,"Tajik","10,721,000"
+TZ,tanzania,False,20XX,Dodoma,"Swahili, English","70,038,850"
+TH,thailand,True,20XX,Bangkok,"Thai","70,250,751"
+GM,the_gambia,False,20XX,Banjul,"English","2,422,712"
+TL,timor-leste,False,20XX,Dili,"Portuguese, Tetum","1,409,452"
+TG,togo,False,20XX,Lomé,"French","8,095,498"
+TO,tonga,False,20XX,Nukuʻalofa,"English, Tongan","100,179"
+TT,trinidad_and_tobago,False,20XX,Port of Spain,"English","1,367,764"
+TN,tunisia,False,20XX,Tunis,"Arabic","11,992,843"
+TR,turkey,True,20XX,Ankara,"Turkish","86,092,168"
+TM,turkmenistan,False,20XX,Ashgabat,"Turkmen","7,057,841"
+TC,turks_and_caicos_islands,True,20XX,Cockburn Town,"English","52,299"
+TV,tuvalu,False,20XX,Funafuti,"Tuvaluan, English","10,643"
+UG,uganda,False,20XX,Kampala,"English, Swahili","45,905,417"
+UA,ukraine,False,20XX,Kyiv,"Ukrainian","28,700,000"
+AE,united_arab_emirates,False,20XX,Abu Dhabi,"Arabic","11,294,243"
+GB,united_kingdom,True,20XX,London,"English","69,487,000"
+US,united_states,True,20XX,Washington D.C.,"English","341,784,857"
+VI,united_states_virgin_islands,False,20XX,Charlotte Amalie,"English","87,146"
+UY,uruguay,False,20XX,Montevideo,"Spanish","3,480,601"
+UZ,uzbekistan,True,20XX,Tashkent,"Uzbek","39,047,321"
+VU,vanuatu,False,20XX,Port Vila,"English, French, Bislama","321,409"
+VA,vatican_city,True,20XX,Vatican City,"Italian, Latin","882"
+VE,venezuela,False,20XX,Caracas,"Spanish","28,633,711"
+VN,vietnam,True,20XX,Hanoi,"Vietnamese","102,300,000"
+EH,western_sahara,False,20XX,Laayoune / Tifariti,"Arabic","610,813"
+YE,yemen,False,20XX,Aden / Sanaa,"Arabic","32,684,503"
+ZM,zambia,False,20XX,Lusaka,"English","23,003,214"
+ZW,zimbabwe,False,20XX,Harare,"Chewa, Chibarwe, English, Kalanga, Khoisan, Nambya, Ndau, Ndebele, Shangani, Shona, Sotho, Tonga, Tswana, Venda, Xhosa","16,175,966"

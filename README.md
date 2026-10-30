@@ -18,10 +18,10 @@ The CSV file `countries.csv` contains information about each country.
 All the info in the CSV is reflected in the website's content.
 
 Things that can be changed in the CSV:
-* The groupings of countries on the map (including adding new groups)
 * If you have visited a country or not
 * The name of countries
 * The year you last visited the country
+* Fun facts (current the capital, official languages, and population)
 
 Once you have made your changes *and saved the file*, make your changes take effect by running the build script:
 1. Open the terminal by pressing `'Ctrl' + '~'` on your keyboard
@@ -158,6 +158,8 @@ To fix this and download the latest version:
 3. Type `git pull` and hit enter
 2. Type `git stash pop` and hit enter
 
+If you get some other error, text/call me.
+
 
  --------------------------------------------------------------
 
@@ -179,13 +181,8 @@ The repository structure is pretty self-explanatory, but here is a quick rundown
 
  --------------------------------------------------------------
 ### QUESTIONS
-* [+] Make destination column smaller in table to give room for dates, allow for multiple dates to be in the column
-* [+] Counter for how many countries - 62
-* [+] Counter for U.N. countries - 56
-
-* [-] Display "fun facts" for country - capital, population, language?
+* [-] What "fun facts" does he want? Currently capital, population, language
 * [-] Put grant flights into marquee
-* [-] Make mag draggable
 
 
 ### DONE:
@@ -210,10 +207,14 @@ The repository structure is pretty self-explanatory, but here is a quick rundown
 * [+] Allocate some default space for the photo container
 * [+] Make the map back button only be visible when zoomed into a group
 * [+] Make display on mobile (single column for everything)
+* [+] Make destination column smaller in table to give room for dates, allow for multiple dates to be in the column
+* [+] Counter for how many countries - 62
+* [+] Counter for U.N. countries - 56
+* [+] Wheel scroll in SVG
+* [+] Draggable SVG
+* [+] Permanently highlight selected country
 
 ### TODO:
 #### Design
 * [-] Info box look like passport page?
-
-* [-] Only allow zooming into a group when zoomed all the way out, otherwise just do country select
-* [-] Draggable SVG
+* [-] Mobile scroll, pinch, and zoom

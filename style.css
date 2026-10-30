@@ -293,10 +293,10 @@ tr {
     font-weight: bold;
 }
 
-#secondary-info-box {
+#error-info-box {
     text-align: center;
     font-size: 15px;
-    color: #A63E3F;
+    color: #ee3b3e;
 }
 
 #flag-container {
@@ -305,6 +305,19 @@ tr {
     height: 100px;
     margin: 0 auto;
     border: outset;
+}
+
+.fun-facts {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-style: italic;
+}
+.capital, .language, .population {
+    margin-top: 12px;
+    text-decoration: underline;
+    font-weight: bold;
+    font-style: normal;
 }
 
 #cities-container {

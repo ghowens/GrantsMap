@@ -44,13 +44,14 @@ soup = BeautifulSoup(html_string, "html.parser")
 country_count = 0
 un_count = 0
 country_table_html = "<tbody>\n\t\t\t\t\t"
+fun_facts_html = "<div id=\"fun-facts-container\">\n\t\t\t\t"
 for row in csv_data[1:]:
-    (country_code, country_name, group, visited, year_visited) = row
+    (country_code, country_name, visited, year_visited, capital, language, population) = row
     visited = visited.strip().lower() == "true"
 
     path_element = soup.find(id=country_code)
     if path_element == None:
-        print(f"WARNING: Country {country_name} ({country_code}) not found in HTML")
+        print(f"WARNING: Country {country_name} ({country_code}) was listed in CSV but not found drawn in the map")
         continue
 
     # Set visited class in path if needed
@@ -64,28 +65,6 @@ for row in csv_data[1:]:
         path_string = f"<path id=\"{country_code}\" class=\"country"
         html_string = html_string.replace(f"<path id=\"{country_code}\" class=\"country visited", path_string)
 
-    # Shift country path to new group if needed
-    path_element = soup.find(id=country_code)
-    html_group = path_element.parent["id"]
-    if html_group != group:
-        print(f"INFO: Moving country {country_name} ({country_code}) from group {html_group} to {group}")
-        
-        start = html_string.find(f"<path id=\"{country_code}\"")
-        end = html_string.find("/>", start) + 2
-        path_string = html_string[start:end]
-
-        old_group_string = f"<g id=\"{group}\">"
-        new_group_string = f"<g id=\"{group}\">" + "\n\t\t\t\t" + path_string
-
-        # If creating a new group
-        if old_group_string not in html_string:
-            print(f"INFO: Creating a new group for {group}")
-            old_group_string = f"</g>\n\t\t</svg>"
-            new_group_string = f"</g>\n\t\t\t<g id=\"{group}\">" + "\n\t\t\t\t" + path_string + "\n\t\t\t</g>\n\t\t</svg>"
-
-        html_string = html_string.replace(path_string, "")
-        html_string = html_string.replace(old_group_string.expandtabs(4), new_group_string.expandtabs(4))
-    
     # Update table
     if visited:
         country_count += 1
@@ -94,7 +73,10 @@ for row in csv_data[1:]:
 
     if "".join(char for char in country_name if char.isalnum()) in un_countries:
         un_count += 1
-
+    
+    # Add fun facts for each country
+    fun_fact_entry = f"<div id=\"fun-facts-{country_code}\" class=\"fun-facts hidden\"><span class=\"capital\">Capital</span><span>{capital}</span><span class=\"language\">Official Language(s)</span><span>{language}</span><span class=\"population\">Population</span><span>{population}</span></div>\n\t\t\t\t"
+    fun_facts_html += fun_fact_entry.expandtabs(4)
 
 
 # /*-- ================================================ --->
@@ -197,6 +179,11 @@ photos_html += "</div>\n\t\t"
 start = html_string.find("<tbody>", html_string.index("table id=\"countries-table\""))
 end = html_string.find("</tbody>", start)
 html_string = html_string[:start] + country_table_html[:-4] + html_string[end:]
+
+# Add fun facts
+start = html_string.find("<div id=\"fun-facts-container\">")
+end = html_string.find("</div> <!-- END OF FUN FACTS -->", start)
+html_string = html_string[:start] + fun_facts_html[:-4] + html_string[end:]
 
 # Replace country count
 start = html_string.find("# Countries visited - ") + len("# Countries visited - ")
