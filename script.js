@@ -350,25 +350,6 @@ function displayPhotos(countryCode) {
 }
 
 /**
- * Prevent hitboxes from having cursors displayed over them.
- * Used when you zoom into a hitbox, so you can select the individual countries within them
- */
-function removeHitboxPointer() {
-    document.querySelectorAll(".hitbox").forEach(hitbox => {
-        hitbox.classList.remove("pointer-cursor");
-    });
-}
-
-/**
- * Add cursors being displayed when hovering over hitboxes
- */
-function addHitboxPointer() {
-    document.querySelectorAll(".hitbox").forEach(hitbox => {
-        hitbox.classList.add("pointer-cursor");
-    });
-}
-
-/**
  * Set the displayed flag to the given country
  * @param {*} countryCode the two-letter country code to display the flag for
  */
@@ -535,8 +516,12 @@ document.querySelectorAll(".city-entry").forEach(cityEntry => {
 document.getElementById("overlay-btn").addEventListener("click", () => {
     currSvgView = defaultSvgView;
     document.getElementById("overlay-btn").classList.add("hidden");
-    addHitboxPointer();
     smoothViewBoxTransition(0, 0, 700, 300, 750);
+
+    // Update selected border width
+    if (displayedCountry) {
+        setScaledCountryStroke(document.getElementById(displayedCountry), "gold", 5);
+    }
 });
 
 /**
@@ -601,7 +586,7 @@ svg.addEventListener("wheel", (e) => {
     let zoomDir = (e.deltaY > 0) ? 1 : -1;
     let [defaultX, defaultY, defaultWidth, defaultHeight] = defaultSvgView;
     let [vbX, vbY, vbWidth, vbHeight] = currSvgView;
-    
+
     // Do not block/prevent webpage scrolling if we are already zoomed all the way out and trying to zoom out more, or vice versa
     // if ((vbWidth == defaultWidth && zoomDir == 1) || (vbWidth == defaultWidth/maxZoomRate && zoomDir == -1)) {
     //     return;
